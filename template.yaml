@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Login with Cognito
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  GetPokemonFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app/requests/pokemon.fetchPokemon
+      Runtime: nodejs8.10
+      CodeUri: ./
+      MemorySize: 128
+      Timeout: 60
+      Events:
+        CreateEvent:
+          Type: Api
+          Properties:
+            Path: /pokemon/{name}
+            Method: GET
+  AddPokemonFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app/requests/pokemon.AddFavoritePokemon
+      Runtime: nodejs8.10
+      CodeUri: ./
+      MemorySize: 128
+      Timeout: 60
+      Events:
+        CreateEvent:
+          Type: Api
+          Properties:
+            Path: /pokemon
+            Method: POST
+  GetFavoritePokemonsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app/requests/pokemon.getAllFavoritePokemon
+      Runtime: nodejs8.10
+      CodeUri: ./
+      MemorySize: 128
+      Timeout: 60
+      Events:
+        CreateEvent:
+          Type: Api
+          Properties:
+            Path: /pokemons
+            Method: GET
+  DeleteFavoritePokemonFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app/requests/pokemon.deleteFavoritePokemon
+      Runtime: nodejs8.10
+      CodeUri: ./
+      MemorySize: 128
+      Timeout: 60
+      Events:
+        CreateEvent:
+          Type: Api
+          Properties:
+            Path: /pokemon/delete/{name}
+            Method: GET

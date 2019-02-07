@@ -1,0 +1,24 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - npm install
+      - aws cloudformation package 
+        --s3-bucket pokemon-api
+        --template-file samTemplate.yaml 
+        --output-template-file outputSamTemplate.yaml
+      # - aws cloudformation deploy
+      #   --region ${REGION}
+      #   --template-file ${STAGE}-outputSamTemplate.yaml
+      #   --stack-name ${STAGE}-${SERVICE}
+      #   --capabilities CAPABILITY_IAM
+      #   --parameter-override Stage=${STAGE}
+artifacts:
+  type: zip
+  files:
+    # - samTemplate.yaml
+    # - outputSamTemplate.yaml
+    - '**/*'
+
+
+    aws cloudformation deploy --template-file /home/dbezerra/Documents/dev/pokedex-api/outputSamTemplate.yaml --stack-name api-pokemon --CAPABILITIES CAPABILITY_IAM
